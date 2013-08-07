@@ -116,8 +116,8 @@ set autoindent
 
 "swap files are stored here, so that curr. dir is not cluttered with ~*.swp
 "files
-set backupdir=/Users/fy2/.vimbak
-set directory=/Users/fy2/.vimbak
+" set backupdir=/nfs/users/nfs_f/fy2/.vimbak
+" set directory=/nfs/users/nfs_f/fy2/.vimbak
 
 "set nowrap
 
