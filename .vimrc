@@ -128,4 +128,9 @@ au BufRead,BufNewFile *.t setfiletype perl
 au BufRead,BufNewFile *.tt2 setfiletype html
 
 " Use 78-column lines
-set textwidth=78
+" set textwidth=78
+
+" High light lines that exceed 80 chars
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
+
