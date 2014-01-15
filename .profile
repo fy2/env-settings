@@ -15,9 +15,9 @@ export GIT_EDITOR=vim
 PATH=/nfs/users/nfs_f/fy2/software/seqtools/seqtools-4.20/install_fy2/bin:$PATH
 PATH=/nfs/users/nfs_m/mh12/git/python3.2:$PATH
 PATH=$HOME/bin:$PATH
-
+#Hmmer path:
+PATH=/nfs/users/nfs_f/fy2/software/HMMer/hmmer_install/bin:$PATH
 #export PS1="\h:\D{%D}:\W$i$ "
-export PS1="\h:\W$i$ "
 
 
 #########################################
@@ -36,9 +36,11 @@ export PS1="\h:\W$i$ "
 # $STY is always set when in GNU screen session
 if [ -n "${STY}" ] ; then
     export HISTFILE=~/.history/screen/${STY}.`date +%Y%m%d`.hist
+    export PS1="\h:\W$i Screen$ "
 else
     #keeps history daily...
     export HISTFILE=~/.history/`date +%Y%m%d`.hist
+    export PS1="\h:\W$i$ "
 fi
 
 export HISTSIZE=100000
