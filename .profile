@@ -36,7 +36,8 @@ PATH=/nfs/users/nfs_f/fy2/software/HMMer/hmmer_install/bin:$PATH
 # $STY is always set when in GNU screen session
 if [ -n "${STY}" ] ; then
     export HISTFILE=~/.history/screen/${STY}.`date +%Y%m%d`.hist
-    export PS1="\h:\W$i Screen$ "
+    #export PS1="\h:\W$i Screen$ "
+    export PS1="\h:$i(screen:${WINDOW}):\W$ "
 else
     #keeps history daily...
     export HISTFILE=~/.history/`date +%Y%m%d`.hist
@@ -44,6 +45,9 @@ else
 fi
 
 export HISTSIZE=100000
+
+#https://stackoverflow.com/questions/6475524/making-sure-commands-dont-show-up-in-bash-history
+export HISTIGNORE="pwd:ls:ls -ltr:ll:history: *"
 
 # Screen session CMDs were not being written to history file immediately,
 # i.e. system was waiting for a screen session to terminate before. To enable
