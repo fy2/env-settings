@@ -1,0 +1,30 @@
+Instructions for changing to bash
+
+1) Set bash as default using
+
+/software/bin/lchsh 
+
+Enter password and /bin/bash when prompted
+
+I found I had to do this twice.
+
+To find out what shell you are using, either
+
+ps -p $$
+echo $SHELL
+
+2) Only need a file called .profile in your home directory with the following as a minimum
+
+export LSB_DEFAULTPROJECT=teamXX
+export LSB_DEFAULTGROUP=teamXX
+
+if [ -z $PS1 ] ; then
+     source /etc/bashrc
+fi
+
+3) You do not need a .bashrc or a .bash_profile file in your home directory
+
+4) Only need the word pathogen in your .softwarerc
+
+5) I recommend that we all use farm3 for our analysis from now on rather than trying to maintain a set up for both farm2/pcs4 and farm3
+
