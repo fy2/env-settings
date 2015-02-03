@@ -1,1 +1,1 @@
-/home/feyruz/.zshrc
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

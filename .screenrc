@@ -1,1 +1,21 @@
-/home/feyruz/.screenrc
+vbell off
+#hardstatus alwayslastline
+#hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'
+# FIX TERMINAL SCROLLING WHEN INSIDE GNU SCREEN
+# http://www.cmdln.org/2007/07/31/fix-terminal-scrolling-when-inside-gnu-screen/
+#termcapinfo xterm|xterms|xs|rxvt ti@:te@
+# So that screen always treats your shell as a login shell
+# and source the same files that would be read if just started
+# a new shell normally:
+
+#termcapinfo xterm* 'hs:ts=\E]0;:fs=\007:ds=\E]0;\007'
+#defhstatus "screen ^E (^Et) | $USER@^EH"
+#hardstatus off
+shell -$SHELL
+#hardstatus alwayslastline "%= %3n %t%? [%h]%? %="
+caption always "%= %-w%L>%{= BW}%n*%t%{-}%52<%+w %L="
+#termcapinfo xterm*|Eterm|mlterm "hs:ts=\E]0;:fs=\007:ds=\E]0;screen\007"
+termcapinfo xterm-unicode ti@:te@
+termcapinfo xterm ti@:te@
+termcapinfo xterm 'hs:ts=\E]2;:fs=07:ds=\E]2;screen07'
+defscrollback 20000
