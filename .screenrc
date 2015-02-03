@@ -1,12 +1,1 @@
-vbell off
-#hardstatus alwayslastline
-hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'
-
-# FIX TERMINAL SCROLLING WHEN INSIDE GNU SCREEN
-# http://www.cmdln.org/2007/07/31/fix-terminal-scrolling-when-inside-gnu-screen/
-termcapinfo xterm|xterms|xs|rxvt ti@:te@
-
-# So that screen always treats your shell as a login shell 
-# and source the same files that would be read if just started 
-# a new shell normally:
-shell -$SHELL
+/home/feyruz/.screenrc
