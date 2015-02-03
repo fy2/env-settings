@@ -1,0 +1,3 @@
+#!/bin/bash
+
+rgrep --color=always "$1" $(dirname $(perldoc -l perl))
