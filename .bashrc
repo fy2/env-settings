@@ -37,7 +37,7 @@ export PS1="\h:\W$i$ "
 fi
 export HISTSIZE=100000
 #https://stackoverflow.com/questions/6475524/making-sure-commands-dont-show-up-in-bash-history
-export HISTIGNORE="pwd:ls:clear:ls -ltr:ll:history: *"
+export HISTIGNORE="alog:git diff:pwd:ls:clear:ls -ltr:ll:res apache:exit:git log:git status:history: *"
 # Screen session CMDs were not being written to history file immediately,
 # i.e. system was waiting for a screen session to terminate before. To enable
 # immediate writing, this solution was suggested:
@@ -138,13 +138,11 @@ fi
 
 alias ll='ls -lah'
 #source ~/perl5/perlbrew/etc/bashrc
-#PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
-#Make the prompt yellow! 
-PS1='\[\e[1;33m\][\u@\h \W]\$\[\e[0m\] '
+PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
 
 PERL_MB_OPT="--install_base \"/home/feyruz/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/feyruz/perl5"; export PERL_MM_OPT;
-PATH=/home/feyruz/bin:${PATH}
+PATH=/home/feyruz/bin:/home/feyruz/sandbox/test_install_vim/bin:${PATH}
 alias rgrep='rgrep --color'
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
@@ -160,3 +158,7 @@ function settitle() {
   printf "\033]0;%s\007" "$@"
  fi
 }
+
+EDITOR=/usr/bin/vim; export EDITOR;
+
+umask 0002
