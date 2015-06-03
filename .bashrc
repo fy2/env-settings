@@ -28,13 +28,14 @@ shopt -s checkwinsize
  # See 'man test' for understanding -n or -z options
  # $STY is always set when in GNU screen session
 if [ -n "${STY}" ] ; then
-export HISTFILE=~/.history/screen/${STY}.`date +%Y%m%d`.hist
-export PS1="\h:$i(screen:${WINDOW}):\W$ "
+  export HISTFILE=~/.history/screen/${STY}.`date +%Y%m%d`.hist
+  export PS1="\h:$i(screen:${WINDOW}):\W$ "
 else
 #keeps history daily...
-export HISTFILE=~/.history/`date +%Y%m%d`.hist
-export PS1="\h:\W$i$ "
+  export HISTFILE=~/.history/`date +%Y%m%d`.hist
+  export PS1="\h:\W$i$ "
 fi
+
 export HISTSIZE=100000
 #https://stackoverflow.com/questions/6475524/making-sure-commands-dont-show-up-in-bash-history
 export HISTIGNORE="alog:git diff:pwd:ls:clear:ls -ltr:ll:res apache:exit:git log:git status:history: *"
@@ -138,14 +139,24 @@ fi
 
 alias ll='ls -lah'
 #source ~/perl5/perlbrew/etc/bashrc
+
+# Make prompt green coloured:
 PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
+
+# This is the alternative PS1 (has some other characters in front of it in order
+# to enable auto-titling in screen sessions. It makes a proper prompt only in
+# screen sessions, so thats why we make it only is in screen.                                                                                                  
+# http://aperiodic.net/screen/title_examples
+if [[ $TERM = screen* ]]; then
+    PS1='\[\033k\033\\\]\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
+fi
 
 PERL_MB_OPT="--install_base \"/home/feyruz/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/feyruz/perl5"; export PERL_MM_OPT;
-PATH=/home/feyruz/bin:/home/feyruz/sandbox/test_install_vim/bin:${PATH}
-alias rgrep='rgrep --color'
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+PATH=/home/feyruz/bin:/home/feyruz/sandbox/test_install_vim/bin:${PATH}
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Add to .bashrc
 # Set the title of a Terminal window
