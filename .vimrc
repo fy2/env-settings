@@ -19,6 +19,9 @@ Plugin 'https://github.com/vim-perl/vim-perl.git'
 " looks crappy, all kinds of python errors...
 Plugin 'https://github.com/phongvcao/vim-stardict'
 
+" A real hassle to install, will try later...
+" Plugin 'https://github.com/Valloric/YouCompleteMe.git'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -52,13 +55,12 @@ syntax enable
 
 " Makes sure that a buffer is automatically hidden
 set hidden
-" mouse is on
-" set mouse=a
+
 " folding
-set foldmethod=syntax
-set foldlevelstart=1
-let perl_fold=1
-hi Folded ctermbg=242
+"set foldmethod=syntax
+"set foldlevelstart=1
+"let perl_fold=1
+"hi Folded ctermbg=242
 
 
 "augroup vimrc
@@ -147,3 +149,13 @@ set dictionary+=/usr/share/dict/british-english
 set spelllang=en,it
 set spellsuggest=5
 set complete+=k
+
+" http://vim.wikia.com/wiki/Backspace_and_delete_problems
+" backspace didnt work in same cases while in insert mode, this fixed it:
+set backspace=indent,eol,start
+
+" You can map a key to invoke any of the above commands. For example, the
+" following map invokes the :Grep command to search for the keyword under the
+" cursor (for plugin 'grep.vim'):
+nnoremap <silent> <F2> :Rgrep<CR>
+
