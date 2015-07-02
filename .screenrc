@@ -31,6 +31,9 @@ bindkey "^[[1;5B" focus down
 
 shelltitle "$ |bash"
 
+# to make vim colours work:
+term "screen-256color"
+
 # USEFUL SETTINGS FROM:  https://gist.github.com/joaopizani/2718397
 #
 # the following two lines give a two-line status, with the current window highlighted

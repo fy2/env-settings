@@ -1,0 +1,6 @@
+#!/bin/sh
+#(save me into the path as "google")
+clear &&
+for i in "$@";
+do lynx -accept_all_cookies http://www.google.com/search?q="$@";
+done

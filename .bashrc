@@ -170,6 +170,18 @@ function settitle() {
  fi
 }
 
+# To make vim colours work:
+[[ $TERM = xterm ]] && TERM=xterm-256color
+
 EDITOR=/usr/bin/vim; export EDITOR;
 
 umask 0002
+alias stopa='sudo /etc/init.d/apache2 stop'
+alias stopg='sudo /etc/init.d/gearman-worker stop'
+alias stopm='sudo /etc/init.d/mysql stop'
+                                                                                                                                                                                                                    
+alias starta='sudo /etc/init.d/apache2 start'
+alias startg='sudo /etc/init.d/gearman-worker start'
+alias startm='sudo /etc/init.d/mysql start'
+alias dict='sdcv '
+

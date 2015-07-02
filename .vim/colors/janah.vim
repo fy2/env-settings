@@ -1,0 +1,1 @@
+/home/feyruz/.vim/bundle/vim-janah/colors/janah.vim

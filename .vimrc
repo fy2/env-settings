@@ -13,11 +13,16 @@ Plugin 'gmarik/Vundle.vim'
 
 "This one works poorly! 
 " Plugin 'https://github.com/zakj/vim-showmarks.git'
-" Plugin 'https://github.com/jacquesbh/vim-showmarks.git'
 Plugin 'https://github.com/vim-perl/vim-perl.git'
 
-" looks crappy, all kinds of python errors...
+" turns out I had to compile vim with python
 Plugin 'https://github.com/phongvcao/vim-stardict'
+
+Plugin 'mattn/webapi-vim'
+Plugin 'mattn/gist-vim'
+Plugin 'mhinz/vim-startify'
+Plugin 'mhinz/vim-janah'
+Plugin 'tpope/vim-surround'
 
 " A real hassle to install, will try later...
 " Plugin 'https://github.com/Valloric/YouCompleteMe.git'
@@ -78,7 +83,10 @@ set textwidth=80
 
 " highlight current line
 " https://stackoverflow.com/questions/8640276/how-do-i-change-my-vim-highlight-line-to-not-be-an-underline
-color desert
+color torte
+ "  colorscheme badwolf
+" colorscheme janah
+" color janah
 set cursorline
 hi CursorLine term=bold cterm=bold guibg=Grey40
 
@@ -111,7 +119,6 @@ augroup perl
 augroup END
 
 " http://dougblack.io/words/a-good-vimrc.html
-colorscheme badwolf
 set number
 set showcmd
 set cursorline
@@ -131,6 +138,9 @@ let g:ctrlp_max_files=0
 let g:ctrlp_match_window = 'bottom,order:ttb'
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 0
+
+" CtrlP find file under cursor
+:nmap <leader>lw :CtrlP<CR><C-\>w
 
 " show file name, bottom left
 " set ls=2
@@ -158,4 +168,70 @@ set backspace=indent,eol,start
 " following map invokes the :Grep command to search for the keyword under the
 " cursor (for plugin 'grep.vim'):
 nnoremap <silent> <F2> :Rgrep<CR>
+
+",rg to start typing for Rgrep:
+nnoremap <leader>rg :Rgrep<Space>
+" nnoremap <leader>g :Grep<Space>
+" Skip these dirs in recursive searches: (http://www.vim.org/scripts/script.php?script_id=311)
+let Grep_Skip_Dirs = 'third_party script performance patches mobile misc htdocs conf clients branding INSTALL'
+
+" show matching brackets
+set showmatch
+
+" Make vim-stardict split open in a :split (default value)
+let g:stardict_split_horizontal = 1
+
+" Set vim-stardict split width (or height) to 20 based on whether
+" vim-stardict split is a :vsplit (or :split)
+let g:stardict_split_size = 30
+
+" This option should only be set if your Vim is compiled with +python
+" and -python3 options (in other words, if your Vim doesn't support
+" Python 3):
+let g:stardict_prefer_python3 = 0
+
+" Map vim-stardict's commands
+" Ready for typing the word in
+nnoremap <leader>sw :StarDict<Space>
+" Lookup the word under cursor
+nnoremap <leader>sc :StarDictCursor<CR>
+
+
+" OPTIONAL: You can change the colors of output of vim-stardict inside
+" Vim as follow (see below for the comprehensive list of highlight
+" group):
+"highlight link stardictResult Special              " Default value
+"highlight link stardictWord PreProc                " Default value
+"highlight link stardictWordType Statement          " Default value
+"highlight link stardictWordMeaning Identifier      " Default value
+"highlight link stardictWordExample Type            " Default value
+"highlight link stardictDictName Underlined         " Default value
+
+" run buffer delete
+nnoremap <leader>d :bd<CR>
+nnoremap <leader>gb :! git blame %<CR>
+nnoremap <leader>pd :! perldoc %<CR>
+
+" bro old
+nnoremap <leader>o :bro old<CR>
+
+"close quickfix
+nnoremap <leader>c :ccl<CR>
+
+" marks
+nnoremap <leader>m :marks<CR>
+nnoremap <leader>mc :delm!<CR>:delm A-Z0-9<CR>
+
+" open last n files: :E 3 (opens the last three files)
+" command! -nargs=1 E execute 'n' join(v:oldfiles[0:<args>], ' ')
+
+function! s:center_header(lines) abort
+  let longest_line   = max(map(copy(a:lines), 'len(v:val)'))
+  let centered_lines = map(copy(a:lines), 'repeat(" ", (&columns / 2) - (longest_line / 2)) . v:val')
+  return centered_lines
+endfunction
+ 
+" let g:startify_custom_header = s:center_header(split(system('echo "It works!" | cowsay -f apt'), '\n'))
+let g:startify_custom_header = s:center_header(split(system('tips | cowsay'), '\n'))
+" Plugin: vim-startify {{{1
 
