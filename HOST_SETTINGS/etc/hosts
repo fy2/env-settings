@@ -1,0 +1,16 @@
+# associating vx-feyruz.wcn.co.uk with 127.0.0.1 because we want the requests
+# to be sent tp the local machine which will then be taken care of by POUND (it
+# will use the host name in the request)
+127.0.0.1	localhost vx-feyruz.wcn.co.uk vx2-feyruz.wcn.co.uk
+127.0.1.1	feyruz.wcn.co.uk	vx-feyruz.wcn.co.uk	feyruz vx2-feyruz.wcn.co.uk
+
+# comment this line because we are using pound instead of this hosts file, see the
+# top comment
+#### 192.168.56.101	vx-feyruz.wcn.co.uk 
+#### 192.168.56.102	vx2-feyruz.wcn.co.uk 
+
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters

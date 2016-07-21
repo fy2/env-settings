@@ -1,0 +1,33 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use DateTime;
+use File::Find;
+use Data::Dumper;
+
+my @files;
+my @dated;
+find(\&wanted, '/home/feyruz/.history');
+date_them();
+my @sorted  = sort { $a->[1] cmp $b->[1] } @dated;
+
+foreach my $f (@sorted) {
+  #print `grep -H --color=always -- $ARGV[0] $f->[0][1]/$f->[0][0]`;
+  my $arg_str = join '', @ARGV;
+  $arg_str = "'$arg_str'";
+  print `grep -H -i --color=always -- $arg_str $f->[0][1]/$f->[0][0]`;
+}
+
+sub wanted {
+  if (-f $_) {
+    my $file = $_;
+    push @files, [$file, $File::Find::dir] if $file =~ /hist/;
+  }
+}
+
+sub date_them {
+  foreach my $file (@files) {
+   my ($y,$m,$d) = $file->[0] =~ /(\d{4})(\d{2})(\d{2})\.hist/;
+   push @dated, [$file, DateTime->new(year=>$y, month=> $m, day=>$d)];
+  }
+}

@@ -1,0 +1,41 @@
+vbell off
+# termcapinfo xterm* 'hs:ts=\E]0;:fs=\007:ds=\E]0;\007'
+defhstatus "screen ^E (^Et) | $USER@^EH"
+# hardstatus off
+hardstatus alwayslastline
+#hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f %t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'
+hardstatus string '%{= kR}[ %{R}wimbledon %{r}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f %t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{r}][%{B}%Y-%m-%d %{W}%c %{r}]'
+shell -$SHELL
+defscrollback 10000
+
+# k1 means F1,
+# http://web.mit.edu/gnu/doc/html/screen_7.html#SEC16
+bindkey -k k6 title
+bindkey -k k7 copy
+bindkey -k k8 prev
+bindkey -k k9 next
+bindkey ^H prev
+bindkey ^L next
+
+bindkey -k F2 command #makes F12 an alternative to 'CTRL-A'
+
+# bindkey -k k7 detach
+# bindkey -k k8 kill
+#bindkey -k k; copy #F10
+#bindkey -k F1 prev #F11
+#bindkey -k F2 next
+
+
+# navigating regions with Ctrl-arrows
+bindkey "^[[1;5D" focus left
+bindkey "^[[1;5C" focus right
+bindkey "^[[1;5A" focus up
+bindkey "^[[1;5B" focus down
+
+
+shelltitle "$ |bash"
+
+# to make vim colours work:
+term "screen-256color"
+
+bindkey -m > eval "stuff ' '" writebuf "exec sh -c 'xsel -n < /tmp/screen-exchange'"
