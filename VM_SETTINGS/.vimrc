@@ -11,21 +11,29 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-"This one works poorly! 
+"This one works poorly!
 " Plugin 'https://github.com/zakj/vim-showmarks.git'
 Plugin 'https://github.com/vim-perl/vim-perl.git'
 
 " turns out I had to compile vim with python
 Plugin 'https://github.com/phongvcao/vim-stardict'
 
-Plugin 'mattn/webapi-vim'
-Plugin 'mattn/gist-vim'
+"Plugin 'mattn/webapi-vim'
+"Plugin 'mattn/gist-vim'
 Plugin 'mhinz/vim-startify'
 Plugin 'mhinz/vim-janah'
 Plugin 'tpope/vim-surround'
+Plugin 'majutsushi/tagbar'
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'kien/ctrlp.vim'
+Plugin 'vim-scripts/Mark--Karkat'
+Plugin 'tpope/vim-fugitive'
+"Plugin 'powerline/powerline'
+Plugin 'stephpy/vim-yaml'
+"Plugin 'maciakl/vim-neatstatus'
 
 " A real hassle to install, will try later...
-" Plugin 'https://github.com/Valloric/YouCompleteMe.git'
+" Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -69,7 +77,7 @@ set hidden
 
 
 "augroup vimrc
-"  au BufReadPre * setlocal foldmethod=syntax | setlocal foldlevelstart=2 | let perl_fold=1 
+"  au BufReadPre * setlocal foldmethod=syntax | setlocal foldlevelstart=2 | let perl_fold=1
 "  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
 "augroup END
 
@@ -77,27 +85,27 @@ set hidden
 set hlsearch
 set textwidth=80
 
-" highlight if exceeds 80 chars:
-" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-" match OverLength /\%81v.\+/
-
 " highlight current line
 " https://stackoverflow.com/questions/8640276/how-do-i-change-my-vim-highlight-line-to-not-be-an-underline
-color torte
+"color torte
  "  colorscheme badwolf
 " colorscheme janah
-" color janah
+color janah
 set cursorline
-hi CursorLine term=bold cterm=bold guibg=Grey40
+" highlight the current line, make it ligther
+hi CursorLine term=bold cterm=bold
+" set cursorline
+"highlight CursorLine term=bold cterm=bold ctermbg=17
+highlight Search ctermbg=Yellow ctermfg=Black
 
-"set list
-
+" Make the cursor line number red:
+hi cursorlinenr ctermfg=160 ctermbg=232
 
 " Let's try the DavidGE way...
 "Perl and Template Toolkit improvements:
 function! FixPerl()
   " Fix perl man
-  setlocal keywordprg=perldoc\ 
+  setlocal keywordprg=perldoc\
 
   " Fix gf for Perl
   setlocal path=.,~/dev/vX/WCN/lib/,~/dev/vX/WCN/t/lib/,~/dev/vX/WCN/template/
@@ -121,7 +129,6 @@ augroup END
 " http://dougblack.io/words/a-good-vimrc.html
 set number
 set showcmd
-set cursorline
 set wildmenu
 set showmatch
 set incsearch
@@ -135,7 +142,8 @@ nnoremap <leader>s :mksession<CR>
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_max_files=0
-let g:ctrlp_match_window = 'bottom,order:ttb'
+" let g:ctrlp_match_window = 'bottom,order:ttb'
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:30,results:30'
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 0
 
@@ -150,8 +158,12 @@ let g:ctrlp_working_path_mode = 0
 :nnoremap <F4> :bnext<CR>
 :nnoremap <F3> :bprev<CR>
 
+" enable find/replace word under cursor:
+:nnoremap <Leader>s :%s/<C-r><C-w>//g<Left><Left>
+
 " http://vim.wikia.com/wiki/Easier_buffer_switching
 :nnoremap <F5> :buffers<CR>:buffer<Space>
+:nnoremap <leader>b :buffers<CR>:buffer<Space>
 
 " It can be cumbersome to type CTRL-X CTRL-K. While in insert mode CTRL-N and CTRL-P will work.
 " http://vim.wikia.com/wiki/Dictionary_completions
@@ -219,7 +231,7 @@ nnoremap <leader>o :bro old<CR>
 nnoremap <leader>c :ccl<CR>
 
 " marks
-nnoremap <leader>m :marks<CR>
+"nnoremap <leader>m :marks<CR>
 nnoremap <leader>mc :delm!<CR>:delm A-Z0-9<CR>
 
 " open last n files: :E 3 (opens the last three files)
@@ -230,8 +242,101 @@ function! s:center_header(lines) abort
   let centered_lines = map(copy(a:lines), 'repeat(" ", (&columns / 2) - (longest_line / 2)) . v:val')
   return centered_lines
 endfunction
- 
+
 " let g:startify_custom_header = s:center_header(split(system('echo "It works!" | cowsay -f apt'), '\n'))
 let g:startify_custom_header = s:center_header(split(system('tips | cowsay'), '\n'))
 " Plugin: vim-startify {{{1
 
+let g:startify_files_number = 20
+
+nnoremap <leader><leader>s :Startify<CR>
+nnoremap <leader><leader>t :TagbarToggle<CR>
+nnoremap <leader><leader>h :cd /home/feyruz/dev/vX/WCN<CR>
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+nmap <leader><leader>n :set invnumber<CR>
+
+" When resizing the window, tagbar would not respond to mouse clicks to jump to
+" the next function. However, the setting below helped fix this issue.
+let g:tagbar_expand = 1
+
+" makes ctrlp open selected files in hidden buffers
+let g:ctrlp_open_multiple_files = 'i'
+
+
+" http://vim.wikia.com/wiki/Maximize_window_and_return_to_previous_split_structure
+nnoremap <C-W>O :call MaximizeToggle()<CR>
+nnoremap <C-W>o :call MaximizeToggle()<CR>
+nnoremap <C-W><C-O> :call MaximizeToggle()<CR>
+function! MaximizeToggle()
+  if exists("s:maximize_session")
+    exec "source " . s:maximize_session
+    call delete(s:maximize_session)
+    unlet s:maximize_session
+    let &hidden=s:maximize_hidden_save
+    unlet s:maximize_hidden_save
+  else
+    let s:maximize_hidden_save = &hidden
+    let s:maximize_session = tempname()
+    set hidden
+    exec "mksession! " . s:maximize_session
+    only
+  endif
+endfunction
+
+nmap <leader><leader>b :hi CursorLine term=bold cterm=bold<CR>
+set viminfo='100,n$HOME/.vim/files/info/viminfo
+
+set mouse=a
+
+" only applies to vimdiff:
+"highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+"highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+"highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+"highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+
+
+" https://robots.thoughtbot.com/faster-grepping-in-vim
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor\ -p\ /home/feyruz/.agignore
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+" bind K to grep word under cursor
+" Normally the quickfix window is at the bottom of the screen.  If there are
+" vertical splits, it's at the bottom of the rightmost column of windows.  To
+" make it always occupy the full width:
+"	:botright cwindow
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:botright cwindow<CR>
+vnoremap K :<C-U>execute('grep! "\b' . g:Get_visual_selection() . '\b"\|botright cwindow')<CR><CR>
+
+" bind \ (backward slash) to grep shortcut
+command -nargs=+ -complete=file -bar Ag silent! grep! <args>|botright cwindow|redraw!
+" When \ is pressed, Vim waits for our input:
+nnoremap \ :Ag<SPACE>
+
+" so that visual selection search works with K search:
+function! g:Get_visual_selection()
+  " Why is this not a built-in Vim script function?!
+  let [lnum1, col1] = getpos("'<")[1:2]
+  let [lnum2, col2] = getpos("'>")[1:2]
+  let lines = getline(lnum1, lnum2)
+  let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
+  let lines[0] = lines[0][col1 - 1:]
+  return join(lines, "\n")
+"  let line_joined = join(lines, "\n")
+"  return escape(line_joined, "'")
+endfunction
+
+let g:startify_change_to_dir = 0

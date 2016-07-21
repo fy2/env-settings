@@ -1,10 +1,10 @@
 $DB::deep = 500; # or more if necessary
 
 # taken from tony to limit dump depth:
-parse_options('dumpDepth=2 NonStop=1') ;
+parse_options('dumpDepth=5 NonStop=1 HistFile=/home/feyruz/Delete/debug.hist HistSize=10000') ;
 
 # https://github.com/Ovid/DB--Color
-use DB::Color;
+#use DB::Color;
 
 sub afterinit {
     push @DB::typeahead, "c" if $ENV{DEBUGGING};

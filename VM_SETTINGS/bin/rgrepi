@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec grep --exclude=bundle-*.js --exclude=*.swp -inr --color=always "$@"

@@ -38,7 +38,7 @@ fi
 
 export HISTSIZE=100000
 #https://stackoverflow.com/questions/6475524/making-sure-commands-dont-show-up-in-bash-history
-export HISTIGNORE="alog:git diff:pwd:ls:clear:ls -ltr:ll:res apache:exit:git log:git status:history: *"
+export HISTIGNORE="alog:git diff:pwd:ls:clear:ls -ltr:ll:res apache:greph:exit:git log:git status:history: *"
 # Screen session CMDs were not being written to history file immediately,
 # i.e. system was waiting for a screen session to terminate before. To enable
 # immediate writing, this solution was suggested:
@@ -145,7 +145,7 @@ PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
 
 # This is the alternative PS1 (has some other characters in front of it in order
 # to enable auto-titling in screen sessions. It makes a proper prompt only in
-# screen sessions, so thats why we make it only is in screen.                                                                                                  
+# screen sessions, so thats why we make it only is in screen.
 # http://aperiodic.net/screen/title_examples
 if [[ $TERM = screen* ]]; then
     PS1='\[\033k\033\\\]\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
@@ -154,7 +154,7 @@ fi
 PERL_MB_OPT="--install_base \"/home/feyruz/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/feyruz/perl5"; export PERL_MM_OPT;
 
-PATH=/home/feyruz/bin:/home/feyruz/sandbox/test_install_vim/bin:${PATH}
+PATH=/home/feyruz/bin:/home/feyruz/Downloads/silversearcher_install/bin:${PATH}
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
@@ -179,9 +179,10 @@ umask 0002
 alias stopa='sudo /etc/init.d/apache2 stop'
 alias stopg='sudo /etc/init.d/gearman-worker stop'
 alias stopm='sudo /etc/init.d/mysql stop'
-                                                                                                                                                                                                                    
+
 alias starta='sudo /etc/init.d/apache2 start'
 alias startg='sudo /etc/init.d/gearman-worker start'
 alias startm='sudo /etc/init.d/mysql start'
 alias dict='sdcv '
+alias giff='git diff'
 
