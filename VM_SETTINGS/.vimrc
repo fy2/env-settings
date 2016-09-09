@@ -18,8 +18,9 @@ Plugin 'https://github.com/vim-perl/vim-perl.git'
 " turns out I had to compile vim with python
 Plugin 'https://github.com/phongvcao/vim-stardict'
 
-"Plugin 'mattn/webapi-vim'
-"Plugin 'mattn/gist-vim'
+Plugin 'mattn/webapi-vim'
+Plugin 'mattn/gist-vim'
+
 Plugin 'mhinz/vim-startify'
 Plugin 'mhinz/vim-janah'
 Plugin 'tpope/vim-surround'
@@ -28,6 +29,7 @@ Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'kien/ctrlp.vim'
 Plugin 'vim-scripts/Mark--Karkat'
 Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/nerdtree'
 "Plugin 'powerline/powerline'
 Plugin 'stephpy/vim-yaml'
 "Plugin 'maciakl/vim-neatstatus'
@@ -145,7 +147,6 @@ let g:ctrlp_max_files=0
 " let g:ctrlp_match_window = 'bottom,order:ttb'
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:30,results:30'
 let g:ctrlp_switch_buffer = 0
-let g:ctrlp_working_path_mode = 0
 
 " CtrlP find file under cursor
 :nmap <leader>lw :CtrlP<CR><C-\>w
@@ -251,6 +252,7 @@ let g:startify_files_number = 20
 
 nnoremap <leader><leader>s :Startify<CR>
 nnoremap <leader><leader>t :TagbarToggle<CR>
+nnoremap <leader><leader>n :NERDTreeToggle<CR>
 nnoremap <leader><leader>h :cd /home/feyruz/dev/vX/WCN<CR>
 
 nnoremap <C-h> <C-w>h
@@ -258,7 +260,6 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-nmap <leader><leader>n :set invnumber<CR>
 
 " When resizing the window, tagbar would not respond to mouse clicks to jump to
 " the next function. However, the setting below helped fix this issue.
@@ -340,3 +341,27 @@ function! g:Get_visual_selection()
 endfunction
 
 let g:startify_change_to_dir = 0
+let g:NERDTreeChDirMode       = 2
+let g:NERDTreeHighlightCursorline = 1
+let g:ctrlp_working_path_mode = 0
+
+:nmap <leader><leader>f :set guifont=Inconsolata\ 1
+
+
+function! NerdOpenFunc(action, line)
+    " Use CtrlP's default file opening function
+    call call('ctrlp#acceptfile', [a:action, a:line])
+
+    " Open NERDTree with its dir. set to current file's
+    NERDTree %
+
+    " Set pwd to where you want it to be
+    cd /home/feyruz/dev/vX/WCN
+
+    " Set the focus on the file opened, away from NERDTree browser window
+    wincmd p
+
+endfunction
+
+let g:ctrlp_open_func = { 'files': 'NerdOpenFunc' }
+
