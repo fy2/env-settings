@@ -11,28 +11,20 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-"This one works poorly!
-" Plugin 'https://github.com/zakj/vim-showmarks.git'
 Plugin 'https://github.com/vim-perl/vim-perl.git'
-
 " turns out I had to compile vim with python
 Plugin 'https://github.com/phongvcao/vim-stardict'
-
 Plugin 'mattn/webapi-vim'
 Plugin 'mattn/gist-vim'
-
 Plugin 'mhinz/vim-startify'
 Plugin 'mhinz/vim-janah'
 Plugin 'tpope/vim-surround'
 Plugin 'majutsushi/tagbar'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'kien/ctrlp.vim'
-Plugin 'vim-scripts/Mark--Karkat'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
-"Plugin 'powerline/powerline'
 Plugin 'stephpy/vim-yaml'
-"Plugin 'maciakl/vim-neatstatus'
 
 " A real hassle to install, will try later...
 " Plugin 'Valloric/YouCompleteMe'
@@ -88,16 +80,10 @@ set hlsearch
 set textwidth=80
 
 " highlight current line
-" https://stackoverflow.com/questions/8640276/how-do-i-change-my-vim-highlight-line-to-not-be-an-underline
-"color torte
- "  colorscheme badwolf
-" colorscheme janah
 color janah
 set cursorline
 " highlight the current line, make it ligther
 hi CursorLine term=bold cterm=bold
-" set cursorline
-"highlight CursorLine term=bold cterm=bold ctermbg=17
 highlight Search ctermbg=Yellow ctermfg=Black
 
 " Make the cursor line number red:
@@ -135,10 +121,6 @@ set wildmenu
 set showmatch
 set incsearch
 set hlsearch
-nnoremap j gj
-nnoremap k gk
-let mapleader = ","
-nnoremap <leader>s :mksession<CR>
 
 " find files with CtrlP https://kien.github.io/ctrlp.vim/
 set runtimepath^=~/.vim/bundle/ctrlp.vim
@@ -147,24 +129,16 @@ let g:ctrlp_max_files=0
 " let g:ctrlp_match_window = 'bottom,order:ttb'
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:30,results:30'
 let g:ctrlp_switch_buffer = 0
+" makes ctrlp open selected files in hidden buffers
+let g:ctrlp_open_multiple_files = 'i'
 
-" CtrlP find file under cursor
-:nmap <leader>lw :CtrlP<CR><C-\>w
+
 
 " show file name, bottom left
 " set ls=2
 
-" map CTRL-tab to next buffer
-:nnoremap <C-I> :bnext<CR>
-:nnoremap <F4> :bnext<CR>
-:nnoremap <F3> :bprev<CR>
 
-" enable find/replace word under cursor:
-:nnoremap <Leader>s :%s/<C-r><C-w>//g<Left><Left>
 
-" http://vim.wikia.com/wiki/Easier_buffer_switching
-:nnoremap <F5> :buffers<CR>:buffer<Space>
-:nnoremap <leader>b :buffers<CR>:buffer<Space>
 
 " It can be cumbersome to type CTRL-X CTRL-K. While in insert mode CTRL-N and CTRL-P will work.
 " http://vim.wikia.com/wiki/Dictionary_completions
@@ -182,11 +156,6 @@ set backspace=indent,eol,start
 " cursor (for plugin 'grep.vim'):
 nnoremap <silent> <F2> :Rgrep<CR>
 
-",rg to start typing for Rgrep:
-nnoremap <leader>rg :Rgrep<Space>
-" nnoremap <leader>g :Grep<Space>
-" Skip these dirs in recursive searches: (http://www.vim.org/scripts/script.php?script_id=311)
-let Grep_Skip_Dirs = 'third_party script performance patches mobile misc htdocs conf clients branding INSTALL'
 
 " show matching brackets
 set showmatch
@@ -203,11 +172,6 @@ let g:stardict_split_size = 30
 " Python 3):
 let g:stardict_prefer_python3 = 0
 
-" Map vim-stardict's commands
-" Ready for typing the word in
-nnoremap <leader>sw :StarDict<Space>
-" Lookup the word under cursor
-nnoremap <leader>sc :StarDictCursor<CR>
 
 
 " OPTIONAL: You can change the colors of output of vim-stardict inside
@@ -220,23 +184,7 @@ nnoremap <leader>sc :StarDictCursor<CR>
 "highlight link stardictWordExample Type            " Default value
 "highlight link stardictDictName Underlined         " Default value
 
-" run buffer delete
-nnoremap <leader>d :bd<CR>
-nnoremap <leader>gb :! git blame %<CR>
-nnoremap <leader>pd :! perldoc %<CR>
 
-" bro old
-nnoremap <leader>o :bro old<CR>
-
-"close quickfix
-nnoremap <leader>c :ccl<CR>
-
-" marks
-"nnoremap <leader>m :marks<CR>
-nnoremap <leader>mc :delm!<CR>:delm A-Z0-9<CR>
-
-" open last n files: :E 3 (opens the last three files)
-" command! -nargs=1 E execute 'n' join(v:oldfiles[0:<args>], ' ')
 
 function! s:center_header(lines) abort
   let longest_line   = max(map(copy(a:lines), 'len(v:val)'))
@@ -250,23 +198,6 @@ let g:startify_custom_header = s:center_header(split(system('tips | cowsay'), '\
 
 let g:startify_files_number = 20
 
-nnoremap <leader><leader>s :Startify<CR>
-nnoremap <leader><leader>t :TagbarToggle<CR>
-nnoremap <leader><leader>n :NERDTreeToggle<CR>
-nnoremap <leader><leader>h :cd /home/feyruz/dev/vX/WCN<CR>
-
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-
-" When resizing the window, tagbar would not respond to mouse clicks to jump to
-" the next function. However, the setting below helped fix this issue.
-let g:tagbar_expand = 1
-
-" makes ctrlp open selected files in hidden buffers
-let g:ctrlp_open_multiple_files = 'i'
 
 
 " http://vim.wikia.com/wiki/Maximize_window_and_return_to_previous_split_structure
@@ -289,7 +220,6 @@ function! MaximizeToggle()
   endif
 endfunction
 
-nmap <leader><leader>b :hi CursorLine term=bold cterm=bold<CR>
 set viminfo='100,n$HOME/.vim/files/info/viminfo
 
 set mouse=a
@@ -345,23 +275,51 @@ let g:NERDTreeChDirMode       = 2
 let g:NERDTreeHighlightCursorline = 1
 let g:ctrlp_working_path_mode = 0
 
-:nmap <leader><leader>f :set guifont=Inconsolata\ 1
 
-
-function! NerdOpenFunc(action, line)
-    " Use CtrlP's default file opening function
-    call call('ctrlp#acceptfile', [a:action, a:line])
-
-    " Open NERDTree with its dir. set to current file's
-    NERDTree %
-
-    " Set pwd to where you want it to be
-    cd /home/feyruz/dev/vX/WCN
-
-    " Set the focus on the file opened, away from NERDTree browser window
-    wincmd p
-
+function! StartNerdTreeOnCurrFileDir()
+  NERDTree %:p:h
+  cd /home/feyruz/dev/vX/WCN
 endfunction
 
-let g:ctrlp_open_func = { 'files': 'NerdOpenFunc' }
+
+let mapleader = ","
+nnoremap <F5> :call StartNerdTreeOnCurrFileDir()<CR>
+nnoremap <F4> :NERDTreeToggle<CR>
+
+" CtrlP find file under cursor
+nmap <leader>lw :CtrlP<CR><C-\>w
+" Lookup the word under cursor
+nnoremap <leader>s :StarDictCursor<CR>
+" Ready for typing the word in
+nnoremap <leader>w :StarDict<Space>
+
+nnoremap <leader><leader>t :TagbarToggle<CR>
+nnoremap <leader><leader>h :cd /home/feyruz/dev/vX/WCN<CR>
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+"close quickfix
+nnoremap <leader>c :ccl<CR>
+
+nnoremap j gj
+nnoremap k gk
+
+" enable find/replace word under cursor:
+:nnoremap <Leader>r :%s/<C-r><C-w>//g<Left><Left>
+
+
+" This is nerdtree via ctrlp open function
+" function! NerdOpenFunc(action, line)
+"     " Use CtrlP's default file opening function
+"     call call('ctrlp#acceptfile', [a:action, a:line])
+"     " Open NERDTree with its dir. set to current file's
+"     NERDTree %
+"     " Set pwd to where you want it to be
+"     cd /home/feyruz/dev/vX/WCN
+"     " Set the focus on the file opened, away from NERDTree browser window
+"     wincmd p
+" endfunction
+" let g:ctrlp_open_func = { 'files': 'NerdOpenFunc' }
 
