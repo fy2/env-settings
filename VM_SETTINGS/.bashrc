@@ -164,7 +164,7 @@ function settitle() {
  if [ -n "$STY" ] ; then         # We are in a screen session
   echo "Setting screen titles to $@"
   printf "\033k%s\033\\" "$@"
-  screen -X eval "at \\# title $@" "shelltitle $@"
+  screen -X eval "at \# title $@" "shelltitle $@"
  else
   printf "\033]0;%s\007" "$@"
  fi
@@ -183,6 +183,9 @@ alias stopm='sudo /etc/init.d/mysql stop'
 alias starta='sudo /etc/init.d/apache2 start'
 alias startg='sudo /etc/init.d/gearman-worker start'
 alias startm='sudo /etc/init.d/mysql start'
-alias dict='sdcv '
-alias giff='git diff'
 
+# http://stackoverflow.com/questions/7131670/make-bash-alias-that-takes-parameter
+dict_search_to_less() {
+    /usr/bin/sdcv  $1 | /bin/less
+}
+alias s=dict_search_to_less;
