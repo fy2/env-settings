@@ -11,7 +11,7 @@ alias magenta-grep="GREP_COLOR='1;35' grep -E --color=always --line-buffered"
 alias cyan-grep="GREP_COLOR='1;36'    grep -E --color=always --line-buffered"
 alias white-grep="GREP_COLOR='1;37'   grep -E --color=always --line-buffered"
 
-sudo tail -1000f /var/log/apache2/error.log \
+sudo tail -1000f /tmp/FEYRUZ_VX_FULL.log \
       | grey-grep ".*PerformanceLogger.*|$" \
       | cyan-grep "INFO|$" \
       | yellow-grep "WARN|$" \
